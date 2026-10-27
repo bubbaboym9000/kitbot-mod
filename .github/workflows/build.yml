@@ -1,0 +1,89 @@
+name: build
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  GRADLE_VERSION: "8.14.3"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: ${{ env.GRADLE_VERSION }}
+
+      - name: Look up the newest Fabric versions for 1.21.11
+        id: probe
+        continue-on-error: true
+        run: |
+          mkdir -p ci
+          {
+            echo "== loader (stable)"
+            LOADER=$(curl -fsS https://meta.fabricmc.net/v2/versions/loader | python3 -c 'import sys,json; print(next(v["version"] for v in json.load(sys.stdin) if v["stable"]))')
+            echo "$LOADER"
+            echo "== fabric-api for 1.21.11"
+            API=$(curl -fsS https://maven.fabricmc.net/net/fabricmc/fabric-api/fabric-api/maven-metadata.xml | grep -o '<version>[^<]*+1\.21\.11</version>' | sed 's/<[^>]*>//g' | tail -1)
+            echo "$API"
+            echo "== loom (newest non-snapshot)"
+            LOOM=$(curl -fsS https://maven.fabricmc.net/net/fabricmc/fabric-loom/maven-metadata.xml | grep -o '<version>[^<]*</version>' | sed 's/<[^>]*>//g' | grep -vi snapshot | tail -1)
+            echo "$LOOM"
+            echo "LOADER_VERSION=$LOADER" >> "$GITHUB_ENV"
+            echo "FABRIC_API_VERSION=$API" >> "$GITHUB_ENV"
+            echo "LOOM_VERSION=$LOOM" >> "$GITHUB_ENV"
+          } 2>&1 | tee ci/probe.log
+
+      - name: Build
+        id: build
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          ARGS=""
+          [ -n "$LOADER_VERSION" ] && ARGS="$ARGS -Ploader_version=$LOADER_VERSION"
+          [ -n "$FABRIC_API_VERSION" ] && ARGS="$ARGS -Pfabric_api_version=$FABRIC_API_VERSION"
+          [ -n "$LOOM_VERSION" ] && ARGS="$ARGS -Ploom_version=$LOOM_VERSION"
+          echo "gradle build $ARGS" | tee ci/build.log
+          gradle build --no-daemon --stacktrace $ARGS 2>&1 | tee -a ci/build.log
+
+      - name: Collect the jar
+        if: steps.build.outcome == 'success'
+        run: |
+          cp build/libs/kitbot-*.jar ci/ || true
+          rm -f ci/*-sources.jar
+          ls -la ci
+
+      - name: Publish the jar as a release
+        if: steps.build.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          JAR=$(ls build/libs/kitbot-*.jar | grep -v sources | head -1)
+          gh release delete latest --yes --cleanup-tag || true
+          gh release create latest "$JAR" --title "KitBot (latest build)" --notes "Built by CI from commit $GITHUB_SHA. Drop the jar in your mods folder next to Fabric API."
+
+      - name: Publish logs to the ci-logs branch
+        if: always()
+        run: |
+          tmp=$(mktemp -d)
+          cp -r ci/. "$tmp"/
+          echo "outcome: probe=${{ steps.probe.outcome }} build=${{ steps.build.outcome }} commit=$GITHUB_SHA" > "$tmp/status.txt"
+          cd "$tmp"
+          git init -q -b ci-logs
+          git add -A
+          git -c user.name=ci -c user.email=ci@users.noreply.github.com commit -qm "logs for $GITHUB_SHA"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" ci-logs
+
+      - name: Fail the job if the build failed
+        if: steps.build.outcome != 'success'
+        run: exit 1

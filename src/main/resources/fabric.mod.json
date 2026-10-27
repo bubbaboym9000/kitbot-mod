@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "kitbot",
+  "version": "1.0.0",
+  "name": "KitBot",
+  "description": "A sparring bot that fights you with the Classes SMP kit: /kitbot",
+  "authors": ["KitBot"],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["dev.kitbot.mc.KitBotMod"]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}

@@ -56,6 +56,46 @@ jobs:
           echo "gradle build $ARGS" | tee ci/build.log
           gradle build --no-daemon --stacktrace $ARGS 2>&1 | tee -a ci/build.log
 
+      - name: Inspect the Minecraft jar (signatures of everything the mod calls)
+        if: always()
+        continue-on-error: true
+        run: |
+          mkdir -p ci
+          {
+            J=""
+            for f in $(find ~/.gradle /home/runner/work -name '*.jar' -size +5M 2>/dev/null); do
+              if unzip -l "$f" 2>/dev/null | grep -q 'net/minecraft/world/entity/Mob.class'; then J="$f"; break; fi
+            done
+            echo "minecraft jar: $J"
+            [ -z "$J" ] && exit 0
+            find_fq() { unzip -l "$J" | awk '{print $4}' | grep -E "/$1\.class$" | grep -v '\$' | sed 's#/#.#g; s#\.class$##'; }
+            show() {
+              for fq in $(find_fq "$1"); do
+                echo "## $fq"
+                javap -cp "$J" -public "$fq" | grep -E "$2" | sed 's/^ *//'
+              done
+            }
+            show Zombie 'Zombie\(|setBaby'
+            show Mob '(setTarget|getNavigation|getLookControl|setCanPickUpLoot|setPersistenceRequired|setDropChance|setCustomName)'
+            show LivingEntity '(getEffect|addEffect|getOffhandItem|getMainHandItem|startUsingItem|stopUsingItem|isUsingItem|hasLineOfSight|setItemSlot|getAttribute\(|getHealth|getAmplifier)'
+            show Entity ' (distanceTo|blockPosition|getEyePosition|getLookAngle|discard|setPos|setYRot|getY|level|position|getUUID|isRemoved)\('
+            show ProjectileUtil 'getMobArrow'
+            show AbstractArrow '(shoot|setBaseDamage|setCritArrow)'
+            show MobEffects '(SPEED|STRENGTH|SLOWNESS|RESISTANCE|WEAVING)'
+            show Enchantments '(SHARPNESS|POWER|PROTECTION)'
+            show ItemStack ' (enchant|is)\('
+            show ServerPlayer 'sendSystemMessage'
+            show CommandSourceStack '(getPlayerOrException|getLevel|sendSuccess|sendFailure)'
+            show Level ' (getBlockState|setBlock|destroyBlock|removeBlock|registryAccess)\('
+            show ServerLevel 'addFreshEntity'
+            show Items '(NETHERITE_SWORD|NETHERITE_HELMET| BOW|TOTEM_OF_UNDYING|ENCHANTED_GOLDEN_APPLE|GOLDEN_APPLE| ARROW)'
+            show Commands ' literal'
+            show PathNavigation '(moveTo\(double|stop)'
+            show LookControl 'setLookAt\(net'
+            show Attributes '(ATTACK_DAMAGE|FOLLOW_RANGE|SPAWN_REINFORCEMENTS_CHANCE)'
+            show HolderLookup 'getOrThrow'
+          } > ci/diag.log 2>&1
+
       - name: Collect the jar
         if: steps.build.outcome == 'success'
         run: |

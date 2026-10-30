@@ -7,6 +7,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -20,6 +21,8 @@ import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -57,6 +60,18 @@ final class Compat {
         ItemStack stack = new ItemStack(item);
         stack.enchant(lookup.getOrThrow(enchantment), enchantLevel);
         return stack;
+    }
+
+    /** A drinkable potion of the given type. */
+    static ItemStack potion(Holder<Potion> potion) {
+        return PotionContents.createItemStack(Items.POTION, potion);
+    }
+
+    /** Put the stack in the player's inventory; whatever does not fit is dropped at their feet. */
+    static void give(ServerPlayer player, ItemStack stack) {
+        if (!player.getInventory().add(stack) && !stack.isEmpty()) {
+            player.drop(stack, false);
+        }
     }
 
     /** Make the zombie body behave like a sparring partner rather than a zombie. */

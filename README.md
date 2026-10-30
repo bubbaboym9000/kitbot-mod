@@ -5,6 +5,7 @@ on a dedicated server, and other players need nothing installed.
 
     /kitbot         spawn a bot six blocks in front of you; it fights you (and only you)
     /kitbot clear   remove your bots (max 3 at a time)
+    /kit            give yourself the kit (also /kitbot kit)
 
 The bot is a zombie body wearing the kit, so it walks and swings like a vanilla mob. You will see a zombie
 in netherite, not a player skin.

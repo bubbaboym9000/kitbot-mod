@@ -1,0 +1,113 @@
+minecraft jar: /home/runner/.gradle/caches/fabric-loom/minecraftMaven/net/minecraft/minecraft-merged/1.21.11-loom.mappings.1_21_11.layered+hash.253056520-v2/minecraft-merged-1.21.11-loom.mappings.1_21_11.layered+hash.253056520-v2.jar
+## net.minecraft.world.entity.monster.zombie.Zombie
+public net.minecraft.world.entity.monster.zombie.Zombie(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.monster.zombie.Zombie>, net.minecraft.world.level.Level);
+public net.minecraft.world.entity.monster.zombie.Zombie(net.minecraft.world.level.Level);
+public void setBaby(boolean);
+## net.minecraft.world.entity.Mob
+public net.minecraft.world.entity.ai.control.LookControl getLookControl();
+public net.minecraft.world.entity.ai.navigation.PathNavigation getNavigation();
+public void setTarget(net.minecraft.world.entity.LivingEntity);
+public void setPersistenceRequired();
+public void setDropChance(net.minecraft.world.entity.EquipmentSlot, float);
+public void setCanPickUpLoot(boolean);
+## net.minecraft.world.entity.LivingEntity
+public net.minecraft.world.effect.MobEffectInstance getEffect(net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect>);
+public float getEffectBlendFactor(net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect>, float);
+public final boolean addEffect(net.minecraft.world.effect.MobEffectInstance);
+public boolean addEffect(net.minecraft.world.effect.MobEffectInstance, net.minecraft.world.entity.Entity);
+public float getHealth();
+public net.minecraft.world.entity.ai.attributes.AttributeInstance getAttribute(net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute>);
+public net.minecraft.world.item.ItemStack getMainHandItem();
+public net.minecraft.world.item.ItemStack getOffhandItem();
+public void setItemSlot(net.minecraft.world.entity.EquipmentSlot, net.minecraft.world.item.ItemStack);
+public boolean hasLineOfSight(net.minecraft.world.entity.Entity);
+public boolean hasLineOfSight(net.minecraft.world.entity.Entity, net.minecraft.world.level.ClipContext$Block, net.minecraft.world.level.ClipContext$Fluid, double);
+public boolean isUsingItem();
+public void startUsingItem(net.minecraft.world.InteractionHand);
+public void stopUsingItem();
+## net.minecraft.world.entity.Entity
+public final void discard();
+public final void setPos(net.minecraft.world.phys.Vec3);
+public void setPos(double, double, double);
+public float distanceTo(net.minecraft.world.entity.Entity);
+public final net.minecraft.world.phys.Vec3 getEyePosition();
+public final net.minecraft.world.phys.Vec3 getEyePosition(float);
+public net.minecraft.world.phys.Vec3 getLookAngle();
+public java.util.UUID getUUID();
+public net.minecraft.world.phys.Vec3 position();
+public net.minecraft.core.BlockPos blockPosition();
+public final double getY();
+public double getY(double);
+public void setYRot(float);
+public final boolean isRemoved();
+public net.minecraft.world.level.Level level();
+## net.minecraft.world.entity.projectile.ProjectileUtil
+public static net.minecraft.world.entity.projectile.arrow.AbstractArrow getMobArrow(net.minecraft.world.entity.LivingEntity, net.minecraft.world.item.ItemStack, float, net.minecraft.world.item.ItemStack);
+## net.minecraft.world.entity.projectile.arrow.AbstractArrow
+public void shoot(double, double, double, float, float);
+public void setBaseDamage(double);
+public void setCritArrow(boolean);
+public void setBaseDamageFromMob(float);
+## net.minecraft.world.effect.MobEffects
+public static final net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> SPEED;
+public static final net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> SLOWNESS;
+public static final net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> STRENGTH;
+public static final net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> RESISTANCE;
+public static final net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> FIRE_RESISTANCE;
+public static final net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> WEAVING;
+## net.minecraft.world.item.enchantment.Enchantments
+public static final net.minecraft.resources.ResourceKey<net.minecraft.world.item.enchantment.Enchantment> PROTECTION;
+public static final net.minecraft.resources.ResourceKey<net.minecraft.world.item.enchantment.Enchantment> FIRE_PROTECTION;
+public static final net.minecraft.resources.ResourceKey<net.minecraft.world.item.enchantment.Enchantment> BLAST_PROTECTION;
+public static final net.minecraft.resources.ResourceKey<net.minecraft.world.item.enchantment.Enchantment> PROJECTILE_PROTECTION;
+public static final net.minecraft.resources.ResourceKey<net.minecraft.world.item.enchantment.Enchantment> SHARPNESS;
+public static final net.minecraft.resources.ResourceKey<net.minecraft.world.item.enchantment.Enchantment> POWER;
+## net.minecraft.world.item.ItemStack
+public boolean is(net.minecraft.tags.TagKey<net.minecraft.world.item.Item>);
+public boolean is(net.minecraft.world.item.Item);
+public boolean is(java.util.function.Predicate<net.minecraft.core.Holder<net.minecraft.world.item.Item>>);
+public boolean is(net.minecraft.core.Holder<net.minecraft.world.item.Item>);
+public boolean is(net.minecraft.core.HolderSet<net.minecraft.world.item.Item>);
+public void enchant(net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment>, int);
+## net.minecraft.server.level.ServerPlayer
+public void sendSystemMessage(net.minecraft.network.chat.Component);
+public void sendSystemMessage(net.minecraft.network.chat.Component, boolean);
+## net.minecraft.commands.CommandSourceStack
+public net.minecraft.server.level.ServerLevel getLevel();
+public net.minecraft.server.level.ServerPlayer getPlayerOrException() throws com.mojang.brigadier.exceptions.CommandSyntaxException;
+public void sendSuccess(java.util.function.Supplier<net.minecraft.network.chat.Component>, boolean);
+public void sendFailure(net.minecraft.network.chat.Component);
+## net.minecraft.world.level.Level
+public boolean setBlock(net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, int);
+public boolean setBlock(net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, int, int);
+public boolean removeBlock(net.minecraft.core.BlockPos, boolean);
+public boolean destroyBlock(net.minecraft.core.BlockPos, boolean, net.minecraft.world.entity.Entity, int);
+public net.minecraft.world.level.block.state.BlockState getBlockState(net.minecraft.core.BlockPos);
+public net.minecraft.core.RegistryAccess registryAccess();
+## net.minecraft.server.level.ServerLevel
+public boolean addFreshEntity(net.minecraft.world.entity.Entity);
+## net.minecraft.world.item.Items
+public static final net.minecraft.world.item.Item BOWL;
+public static final net.minecraft.world.item.Item BOW;
+public static final net.minecraft.world.item.Item ARROW;
+public static final net.minecraft.world.item.Item NETHERITE_SWORD;
+public static final net.minecraft.world.item.Item NETHERITE_HELMET;
+public static final net.minecraft.world.item.Item GOLDEN_APPLE;
+public static final net.minecraft.world.item.Item ENCHANTED_GOLDEN_APPLE;
+public static final net.minecraft.world.item.Item TOTEM_OF_UNDYING;
+## net.minecraft.references.Items
+## net.minecraft.commands.Commands
+public static com.mojang.brigadier.builder.LiteralArgumentBuilder<net.minecraft.commands.CommandSourceStack> literal(java.lang.String);
+## net.minecraft.world.entity.ai.navigation.PathNavigation
+public boolean moveTo(double, double, double, double);
+public boolean moveTo(double, double, double, int, double);
+public void stop();
+## net.minecraft.world.entity.ai.control.LookControl
+public void setLookAt(net.minecraft.world.phys.Vec3);
+public void setLookAt(net.minecraft.world.entity.Entity);
+public void setLookAt(net.minecraft.world.entity.Entity, float, float);
+## net.minecraft.world.entity.ai.attributes.Attributes
+public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> ATTACK_DAMAGE;
+public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> FOLLOW_RANGE;
+public static final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> SPAWN_REINFORCEMENTS_CHANCE;
+## net.minecraft.core.HolderLookup

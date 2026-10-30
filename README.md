@@ -39,11 +39,10 @@ complains it should be a one-line fix there (likely suspects: the `MobEffects` n
 
 `/kit` (or `/kitbot kit`) gives you the kit laid out slot for slot like the inventory screenshot in the Discord post:
 diamond Protection III armor and a shield, netherite Sharpness IV sword and axe, diamond pickaxe, Power V bow,
-64 arrows, 128 golden apples, 128 XP bottles, 64 cobwebs, 64 wind charges, 16 buckets and 2 water buckets,
+64 arrows, 128 golden apples, 128 XP bottles, 64 cobwebs, 64 wind charges, 64 breeze rods, 16 buckets and 2 water buckets,
 a totem, and splash potions: 3 speed, 3 strength, 2 turtle master II, 3 weaving, 9 instant health II.
-Whatever you were carrying is dropped at your feet, not deleted. The screenshot has one stack of 64 that is too
-blurry to identify (inventory slot 26), so that slot is empty, and it shows no enchanted golden apples even
-though the post lists 2.
+Whatever you were carrying is dropped at your feet, not deleted. The screenshot shows no enchanted golden
+apples even though the post lists 2, so `/kit` does not give any.
 
 ## What it does in a fight
 

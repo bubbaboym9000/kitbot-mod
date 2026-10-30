@@ -20,7 +20,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
  *  armor    diamond helmet / chestplate / leggings / boots, Protection III        offhand  shield
  *
  *  inv row 1 (9-17)   diamond pickaxe | speed | strength | turtle master II | 3x healing | 16 buckets | Power V bow
- *  inv row 2 (18-26)  64 XP | speed | strength | turtle master II | weaving | 2x healing | 64 arrows | (unreadable)
+ *  inv row 2 (18-26)  64 XP | speed | strength | turtle master II | weaving | 2x healing | 64 arrows | 64 breeze rods
  *  inv row 3 (27-35)  64 XP | speed | strength | 64 golden apples | weaving | 3x healing | 64 wind charges
  *  hotbar (0-8)       Sharp IV sword | Sharp IV axe | 64 cobwebs | 64 golden apples | weaving | water bucket |
  *                     healing | water bucket | totem
@@ -84,7 +84,7 @@ final class KitGiver {
         inv.setItem(23, Compat.splash(Potions.STRONG_HEALING));
         inv.setItem(24, Compat.splash(Potions.STRONG_HEALING));
         inv.setItem(25, new ItemStack(Items.ARROW, 64));
-        // slot 26 holds a stack of 64 of something the screenshot is too blurry to identify; left empty
+        inv.setItem(26, new ItemStack(Items.BREEZE_ROD, 64));
 
         // inventory row 3
         inv.setItem(27, new ItemStack(Items.EXPERIENCE_BOTTLE, 64));

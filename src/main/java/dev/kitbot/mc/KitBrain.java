@@ -23,7 +23,7 @@ import net.minecraft.world.phys.Vec3;
  * are vanilla; while the brain wants the zombie to do something else (draw a bow, eat, keep away) it
  * clears the zombie's target so the vanilla attack goal stays out of the way.
  *
- * The kit: netherite armor with Protection III, a Sharpness IV sword, a Power V bow, a totem in the
+ * The kit: diamond armor with Protection III, a netherite Sharpness IV sword, a Power V bow, a totem in the
  * offhand, 128 golden apples, 2 enchanted golden apples, 64 cobwebs, and the potions (speed, strength and
  * weaving are applied at the start, 2 strong turtle masters are saved for emergencies).
  */
@@ -63,10 +63,10 @@ final class KitBrain {
         bow = Compat.enchanted(level, Items.BOW, Enchantments.POWER, 5);
         mob.setItemSlot(EquipmentSlot.MAINHAND, sword);
         mob.setItemSlot(EquipmentSlot.OFFHAND, new ItemStack(Items.TOTEM_OF_UNDYING));
-        mob.setItemSlot(EquipmentSlot.HEAD, Compat.enchanted(level, Items.NETHERITE_HELMET, Enchantments.PROTECTION, 3));
-        mob.setItemSlot(EquipmentSlot.CHEST, Compat.enchanted(level, Items.NETHERITE_CHESTPLATE, Enchantments.PROTECTION, 3));
-        mob.setItemSlot(EquipmentSlot.LEGS, Compat.enchanted(level, Items.NETHERITE_LEGGINGS, Enchantments.PROTECTION, 3));
-        mob.setItemSlot(EquipmentSlot.FEET, Compat.enchanted(level, Items.NETHERITE_BOOTS, Enchantments.PROTECTION, 3));
+        mob.setItemSlot(EquipmentSlot.HEAD, Compat.enchanted(level, Items.DIAMOND_HELMET, Enchantments.PROTECTION, 3));
+        mob.setItemSlot(EquipmentSlot.CHEST, Compat.enchanted(level, Items.DIAMOND_CHESTPLATE, Enchantments.PROTECTION, 3));
+        mob.setItemSlot(EquipmentSlot.LEGS, Compat.enchanted(level, Items.DIAMOND_LEGGINGS, Enchantments.PROTECTION, 3));
+        mob.setItemSlot(EquipmentSlot.FEET, Compat.enchanted(level, Items.DIAMOND_BOOTS, Enchantments.PROTECTION, 3));
         Compat.prepareMob(mob);
     }
 

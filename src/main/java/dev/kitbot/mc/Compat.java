@@ -67,6 +67,16 @@ final class Compat {
         return PotionContents.createItemStack(Items.POTION, potion);
     }
 
+    /** A splash potion of the given type. */
+    static ItemStack splash(Holder<Potion> potion) {
+        return PotionContents.createItemStack(Items.SPLASH_POTION, potion);
+    }
+
+    /** Drop a stack at the player's feet (used for whatever they were carrying before the kit replaced it). */
+    static void dropAtFeet(ServerPlayer player, ItemStack stack) {
+        if (!stack.isEmpty()) player.drop(stack, false);
+    }
+
     /** Put the stack in the player's inventory; whatever does not fit is dropped at their feet. */
     static void give(ServerPlayer player, ItemStack stack) {
         if (!player.getInventory().add(stack) && !stack.isEmpty()) {

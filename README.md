@@ -8,7 +8,7 @@ on a dedicated server, and other players need nothing installed.
     /kit            give yourself the kit (also /kitbot kit)
 
 The bot is a zombie body wearing the kit, so it walks and swings like a vanilla mob. You will see a zombie
-in netherite, not a player skin.
+in diamond armor, not a player skin.
 
 ## Building the .jar
 
@@ -35,9 +35,19 @@ Every Minecraft call whose name or signature moved between 1.21.x releases is in
 complains it should be a one-line fix there (likely suspects: the `MobEffects` names, `getMobArrow`,
 `setDropChance`, `ItemStack.enchant`). Send me the first few errors and I'll fix them.
 
+## /kit
+
+`/kit` (or `/kitbot kit`) gives you the kit laid out slot for slot like the inventory screenshot in the Discord post:
+diamond Protection III armor and a shield, netherite Sharpness IV sword and axe, diamond pickaxe, Power V bow,
+64 arrows, 128 golden apples, 128 XP bottles, 64 cobwebs, 64 wind charges, 16 buckets and 2 water buckets,
+a totem, and splash potions: 3 speed, 3 strength, 2 turtle master II, 3 weaving, 9 instant health II.
+Whatever you were carrying is dropped at your feet, not deleted. The screenshot has one stack of 64 that is too
+blurry to identify (inventory slot 26), so that slot is empty, and it shows no enchanted golden apples even
+though the post lists 2.
+
 ## What it does in a fight
 
-- Kit: netherite armor Protection III, netherite sword Sharpness IV, Power V bow, totem in the offhand,
+- Kit: diamond armor Protection III, netherite sword Sharpness IV, Power V bow, totem in the offhand,
   128 golden apples, 2 enchanted golden apples, 64 cobwebs, 2 strong turtle masters. Speed, strength and
   weaving are applied at the start.
 - Melee is the zombie's normal pathfinding and attacks.
